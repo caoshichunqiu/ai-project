@@ -48,11 +48,11 @@ chain=LLMChain(
 )
 st.title('凡爹，我是你儿子小帅')
 #构建一个缓存，用来保存聊天记录
-if"cache" not in st.session_state:
-    st.session_state.cache = []
+if"cache1" not in st.session_state:
+    st.session_state.cache1 = []
 else:
     #需要从缓存中获取对话信息，在界面中渲染，缓存两块内容，角色，角色的消息
-    for message in st.session_state.cache:
+    for message in st.session_state.cache1:
         with st.chat_message(message['role']):
             st.write(message["content"])
 
@@ -63,11 +63,11 @@ if problem:
     with st.chat_message("user"):
         st.write(problem)
     #将用户的问题添加到缓存
-    st.session_state.cache.append({"role": "user", "content": problem})
+    st.session_state.cache1.append({"role": "user", "content": problem})
     #2.调用链对象回答问题
     result=chain.invoke({"input": problem})
     #result=model.invoke(problem)
     #3.将大模型回答的问题输出到界面上
     with st.chat_message("assistant"):
         st.write(result['text'])
-    st.session_state.cache.append({"role": "user", "content": result['text']})
+    st.session_state.cache1.append({"role": "user", "content": result['text']})
